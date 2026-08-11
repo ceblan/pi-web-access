@@ -66,6 +66,7 @@ function isRedirectPolicyError(message: string): boolean {
 		message.startsWith("Failed to resolve ");
 }
 
+// @lat: [[features#Feature Registration Gates#Image extraction gate]]
 function imageGateError(): string | null {
 	try {
 		return isImageEnabled() ? null : "Image fetching is disabled by image.enabled";

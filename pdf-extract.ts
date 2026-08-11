@@ -64,6 +64,7 @@ const DEFAULT_OUTPUT_DIR = join(tmpdir(), "pi-web-pdf");
 const CONFIG_PATH = getWebSearchConfigPath();
 const PAGE_MARKER_PATTERN = /^<!-- Page (\d+) -->$/gm;
 
+// @lat: [[features#Feature Registration Gates#PDF gate]]
 export function loadPDFConfig(): PDFConfig {
 	if (!existsSync(CONFIG_PATH)) {
 		return {

@@ -20,6 +20,7 @@ export function isImageEnabled(): boolean {
 	return loadFeatureConfig().image?.enabled !== false;
 }
 
+// @lat: [[features#Feature Registration Gates#Image config]]
 export function canAttachImages(): boolean {
 	try {
 		return isImageEnabled();

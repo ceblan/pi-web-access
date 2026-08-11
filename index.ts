@@ -228,6 +228,7 @@ const DEFAULT_REMOTE_CURATOR_TIMEOUT_SECONDS = 60;
 const MAX_CURATOR_TIMEOUT_SECONDS = 600;
 
 // Strip: advertise only configured providers (runtime validation unchanged — see gemini-search.ts)
+// @lat: [[providers#Provider Advertising]]
 const EXPOSED_RESOLVED_PROVIDERS = ["searxng", "tavily", "perplexity", "gemini"] as const;
 const EXPOSED_SEARCH_PROVIDERS = ["auto", "all", ...EXPOSED_RESOLVED_PROVIDERS] as const;
 
@@ -238,12 +239,14 @@ function searchProviderSchema(description: string) {
 	], { description });
 }
 
+// @lat: [[features#Feature Registration Gates#Per-tool gates]]
 function isToolEnabled(config: WebSearchConfig, key: keyof ToolNames): boolean {
 	const override = config.tools?.[key]?.enabled;
 	if (typeof override === "boolean") return override;
 	return key !== "webSearch" && key !== "sourceCheck" || config.webSearch?.enabled !== false;
 }
 
+// @lat: [[features#Feature Registration Gates#Command gates]]
 function isCommandEnabled(config: WebSearchConfig, name: "websearch" | "curator" | "search" | "google-account"): boolean {
 	return config.commands?.[name]?.enabled !== false;
 }
