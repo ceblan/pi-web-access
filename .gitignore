@@ -4,4 +4,3 @@ bun.lock
 
 # Fork-local artifacts (never commit)
 *.tgz
-lat.md/
