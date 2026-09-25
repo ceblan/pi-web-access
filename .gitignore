@@ -4,3 +4,4 @@ bun.lock
 
 # Fork-local artifacts (never commit)
 *.tgz
+/.pi/

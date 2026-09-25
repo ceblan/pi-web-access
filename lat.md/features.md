@@ -41,11 +41,7 @@ See [[extract.ts#imageGateError]].
 
 ## PDF gate
 
-When `pdf.enabled: false` is set in the config, PDF extraction is short-circuited before any hosted fallback is attempted.
-
-## PDF gate
-
-Short-circuits PDF extraction before any hosted provider fallback.
+When `pdf.enabled: false` is set in the config, PDF extraction is short-circuited before any hosted provider fallback is attempted.
 
 See [[pdf-extract.ts#loadPDFConfig]].
 
