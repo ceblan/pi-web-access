@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -9,6 +9,9 @@ import { test } from "node:test";
 const repoRoot = resolve(new URL("..", import.meta.url).pathname);
 
 test("packed installs keep typebox as a peer dependency (hosted by pi at runtime)", async () => {
+	const sourceManifest = JSON.parse(await readFile(join(repoRoot, "package.json"), "utf8"));
+	// @lat: [[lat#Pi Web Access#Pi 1.5 changelog notification]]
+	assert.equal(sourceManifest.pi?.changelogPath, "");
 	const tempDir = await mkdtemp(join(tmpdir(), "pi-web-access-pack-install-"));
 	try {
 		const packOutput = execFileSync("npm", ["pack", "--json", "--pack-destination", tempDir], {
@@ -18,6 +21,7 @@ test("packed installs keep typebox as a peer dependency (hosted by pi at runtime
 		});
 		const [{ filename, files }] = JSON.parse(packOutput);
 		const packedFiles = files.map((file) => file.path);
+		assert.ok(packedFiles.includes("package.json"));
 		assert.ok(packedFiles.includes("index.ts"));
 		assert.ok(packedFiles.includes("CHANGELOG.md"));
 		assert.ok(packedFiles.includes("SECURITY.md"));
@@ -31,6 +35,7 @@ test("packed installs keep typebox as a peer dependency (hosted by pi at runtime
 
 		const packageRequire = createRequire(join(tempDir, "node_modules", "pi-web-access", "package.json"));
 		const installedManifest = packageRequire("pi-web-access/package.json");
+		assert.equal(installedManifest.pi?.changelogPath, "");
 		assert.equal(installedManifest.peerDependencies?.typebox, "*");
 		assert.equal(installedManifest.dependencies?.typebox, undefined);
 		assert.throws(() => packageRequire.resolve("typebox"), { code: "MODULE_NOT_FOUND" });

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Changed
+
+- Pi 1.5 no longer shows a second, automatic extension changelog after an update; the existing curated upgrade notice remains the single update notification. Pi 1.4 behavior is unchanged.
+
 ## [0.45.0] - 2026-10-25
 
 ### Highlights
